@@ -8,16 +8,16 @@ import { loginUser } from '../../store/modules/auth';
 class LoginForm extends Component {
   state = {
     email: '',
-    password: '',
+    password: ''
   };
 
   validator = new SimpleReactValidator({
-    element: message => <div>{message}</div>,
+    element: message => <div>{message}</div>
   });
 
   onChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -25,7 +25,7 @@ class LoginForm extends Component {
     e.preventDefault();
     this.validator.showMessages();
     this.setState({
-      ...this.state,
+      ...this.state
     });
 
     if (!this.validator.allValid()) {
@@ -34,7 +34,7 @@ class LoginForm extends Component {
 
     const credentials = {
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
 
     await this.props.loginUser(credentials);
@@ -76,7 +76,10 @@ class LoginForm extends Component {
           {this.validator.message(
             'password',
             this.state.password,
-            'required|min:6|alpha_num',
+            'required|min:6|alpha_num'
+          )}
+          {this.props.errorMessage !== '' && (
+            <span>{this.props.errorMessage}</span>
           )}
         </div>
         <input type="submit" value="Login" />
@@ -90,15 +93,15 @@ LoginForm.propTypes = {
   loginUser: PropTypes.func,
   errorMessage: PropTypes.string,
   history: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errorMessage: state.auth.errorMessage,
+  errorMessage: state.auth.errorMessage
 });
 
 export default connect(
   mapStateToProps,
-  { loginUser },
+  { loginUser }
 )(LoginForm);
