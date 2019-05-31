@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "node server.js",
+    "start:dev": "webpack-dev-server --open --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -34,6 +35,8 @@
   },
   "dependencies": {
     "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
