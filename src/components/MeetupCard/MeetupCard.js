@@ -1,45 +1,90 @@
 import React from 'react';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCalendar,
+  faClock,
+  faMapMarker
+} from '@fortawesome/free-solid-svg-icons';
+import { dom } from '@fortawesome/fontawesome-svg-core';
 
-export const MeetupCard = () => {
+dom.watch();
+
+export const MeetupCard = ({ meetupDetails }) => {
+  let {
+    description,
+    happeningOn: date,
+    images,
+    topic = 'nothing',
+    location,
+    questions,
+    id
+  } = meetupDetails;
+
+  topic = topic || 'Untitled';
+  const imageUrl = images ? images[0] : process.env.DEFAULT_MEETUP_IMAGE;
+
+  let monthShort = '',
+    dayShort = '',
+    day = '',
+    time = '';
+  if (date) {
+    time = moment(date).format('HH:mm A');
+    day = moment(date).format('dddd, Do MMM YYYY');
+    monthShort = moment(date).format('MMM');
+    dayShort = moment(date).format('DD');
+  }
+
+  const linkToMeetup = `/meetup/${id}`;
+
   return (
     <div className="col-sm-12 col-md-6 col-lg-4 container">
       <div className="meetup-card">
         <aside className="display">
-          <a href="meetup.html" className="">
+          <Link to={linkToMeetup} className="">
             <div
               className="with-back-img meetup-display-img"
               style={{
                 backgroundColor: '#b0e6ce',
-                backgroundImage:
-                  "url('https://placeimg.com/640/480/nature/sepia')",
+                backgroundImage: `url(${imageUrl})`
               }}
             />
             <div className="cta-btn">
-              <span className="count">20</span>
-              <span>Questions</span>
+              <span className="count">
+                {questions.length}
+                {questions.length > 1 ? ' Questions' : ' Question'}
+              </span>
             </div>
-          </a>
+          </Link>
         </aside>
         <main className="info">
           <div className="date-thumbnail">
-            <p className="month">JAN</p>
-            <p className="day grey-color">30</p>
+            <p className="month">{monthShort}</p>
+            <p className="day grey-color">{dayShort}</p>
           </div>
           <div className="details row flex-1">
             <h3 className="title">
-              <a href="meetup.html">The Musonant Poetry Conference, 2019</a>
+              <Link to={linkToMeetup}>{topic}</Link>
             </h3>
             <div className="more grey-color">
-              <p className="detail-text" name="date">
-                Sat, Jul 20, 10:00am
-              </p>
-              <p className="detail-text" name="venue">
-                Plot 2&3 Water Corporation Road Victoria Island
-              </p>
+              {date && (
+                <span>
+                  <p className="detail-text" name="date">
+                    <FontAwesomeIcon className="icon" icon={faCalendar} /> {day}
+                  </p>
+                  <p className="detail-text" name="time">
+                    <FontAwesomeIcon className="icon" icon={faClock} /> {time}
+                  </p>
+                </span>
+              )}
+              {location && (
+                <p className="detail-text" name="time">
+                  <FontAwesomeIcon className="icon" icon={faMapMarker} />{' '}
+                  {location}
+                </p>
+              )}
             </div>
-          </div>
-          <div className="cta-btn">
-            <i className="fa fa-reply" />
           </div>
         </main>
       </div>
