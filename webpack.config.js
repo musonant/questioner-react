@@ -55,7 +55,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        API_URL: JSON.stringify(process.env.API_URL)
+        API_URL: JSON.stringify(process.env.API_URL),
+        DEFAULT_MEETUP_IMAGE: JSON.stringify(process.env.DEFAULT_MEETUP_IMAGE)
       }
     })
   ]

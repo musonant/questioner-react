@@ -1,5 +1,5 @@
 import { setToken } from '../../api/helpers';
-import { signUpRequest, loginRequest } from '../../api/auth';
+import { signUpRequest, loginRequest } from '../../api/requests';
 
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
