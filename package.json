@@ -12,6 +12,7 @@
     "start": "node server.js",
     "start:dev": "webpack-dev-server --mode development --open --hot",
     "test": "jest",
+    "test:watch": "npm test -- --watch",
     "coverage": "jest --coverage"
   },
   "jest": {
