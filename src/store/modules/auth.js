@@ -5,7 +5,7 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const REQUEST_PROCESSING = 'LOGIN_PROCESSING';
+export const REQUEST_PROCESSING = 'REQUEST_PROCESSING';
 
 const initialState = {
   isLoading: false,
@@ -13,23 +13,23 @@ const initialState = {
   currentUser: {}
 };
 
-const signupSuccess = userData => ({
+export const signupSuccess = userData => ({
   type: SIGNUP_SUCCESS,
   userData
 });
-const signupFailure = error => ({
+export const signupFailure = error => ({
   type: SIGNUP_FAILURE,
   error
 });
-const loginSuccess = userData => ({
+export const loginSuccess = userData => ({
   type: LOGIN_SUCCESS,
   userData
 });
-const loginFailure = error => ({
+export const loginFailure = error => ({
   type: LOGIN_FAILURE,
   error
 });
-const requestProcessing = () => ({
+export const requestProcessing = () => ({
   type: REQUEST_PROCESSING
 });
 
