@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Form Should render correctly in debug mode 1`] = `
+<ContextProvider
+  value={null}
+>
+  <LoginForm
+    auth={
+      Object {
+        "currentUser": Object {},
+        "errorMessage": "",
+        "isLoading": false,
+      }
+    }
+    errorMessage=""
+    history={Object {}}
+    loginStatus="login"
+    loginUser={[Function]}
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  />
+</ContextProvider>
+`;
