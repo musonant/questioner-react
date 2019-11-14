@@ -37,12 +37,20 @@ export const loginUser = userData => {
   return async dispatch => {
     try {
       dispatch(requestProcessing());
-      const { data } = await loginRequest(userData);
-      setToken(data.data[0].token);
-      dispatch(loginSuccess(data.data[0].user));
-    } catch (error) {
-      const { data } = error.response;
-      dispatch(loginFailure(data.error));
+      const {
+        data: {
+          data: { token, user }
+        }
+      } = await loginRequest(userData);
+      setToken(token);
+      dispatch(loginSuccess(user));
+    } catch (err) {
+      const {
+        response: {
+          data: { error }
+        }
+      } = err;
+      dispatch(loginFailure(error));
     }
   };
 };
@@ -51,13 +59,18 @@ export const signupUser = userData => {
   return async dispatch => {
     try {
       dispatch(requestProcessing());
-      const { data } = await signUpRequest(userData);
-      const { user } = data.data[0];
-      setToken(data.data[0].token);
+      const {
+        data: { token, user }
+      } = await signUpRequest(userData);
+      setToken(token);
       dispatch(signupSuccess(user));
-    } catch (error) {
-      const { data } = error.response;
-      dispatch(signupFailure(data.error));
+    } catch (err) {
+      const {
+        response: {
+          data: { error }
+        }
+      } = error;
+      dispatch(signupFailure(err));
     }
   };
 };

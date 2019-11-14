@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
+import { isUserLoggedIn } from '../../utils/helpers';
 import { loginUser } from '../../store/modules/auth';
 
 class LoginForm extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    loggedInStatus: isUserLoggedIn()
   };
 
   validator = new SimpleReactValidator({
@@ -40,16 +43,20 @@ class LoginForm extends Component {
     await this.props.loginUser(credentials);
 
     if (this.props.auth.currentUser.id) {
-      this.redirect();
+      // reload the page
+      this.setState(prevState => ({
+        loggedInStatus: true
+      }));
     }
   };
 
-  redirect = () => {
-    this.props.history.push('/');
-  };
-
   render() {
+    const { loggedInStatus } = this.state;
     const { loginStatus } = this.props;
+
+    if (loggedInStatus) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <form
@@ -101,7 +108,4 @@ const mapStateToProps = state => ({
   errorMessage: state.auth.errorMessage
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(LoginForm);
+export default connect(mapStateToProps, { loginUser })(LoginForm);
