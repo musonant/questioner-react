@@ -1,3 +1,6 @@
+import 'semantic-ui-css/semantic.min.css';
+import './App.css';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -5,10 +8,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Banner from './components/Banner/Banner';
 import MeetupCard from './components/MeetupCard/MeetupCard';
-
 import { getMeetups } from './store/modules/meetup';
-
-import './App.css';
 
 class App extends Component {
   componentDidMount() {
@@ -17,7 +17,6 @@ class App extends Component {
 
   fetchTrendingMeetups = async () => {
     const data = await this.props.getMeetups();
-    console.log(this.props.meetups);
   };
 
   render() {
@@ -46,10 +45,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  meetups: state.meetups.meetups
+  meetups: state.meetups.meetups,
 });
 
-export default connect(
-  mapStateToProps,
-  { getMeetups }
-)(App);
+export default connect(mapStateToProps, { getMeetups })(App);

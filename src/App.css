@@ -78,7 +78,7 @@ a:hover {
 
 .max-img {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
 }
 
 .err-msg:empty {
@@ -313,16 +313,30 @@ textarea:focus {
 /* ------------------- */
 
 .main-header {
-  height: 50px;
+  height: 60px;
   align-items: center;
   justify-content: space-between;
   background: #79adad;
   border-bottom: 1px solid #629292;
-  box-shadow: 0px -1px 2px 1px #ddd;
+  box-shadow: 0px -1px 2px 1px #dddddd57;
+  padding: 0px 20px;
 }
 
 .header-brand {
-  padding-left: 20px;
+}
+
+.user-icon-container {
+  width: 45px;
+  height: 45px;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.user-icon::before {
+  font-size: 40px;
 }
 
 .menu-toggle {

@@ -11,16 +11,16 @@ class LoginForm extends Component {
   state = {
     email: '',
     password: '',
-    loggedInStatus: isUserLoggedIn()
+    isLoggedIn: isUserLoggedIn(),
   };
 
   validator = new SimpleReactValidator({
-    element: message => <div>{message}</div>
+    element: message => <div>{message}</div>,
   });
 
   onChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -28,7 +28,7 @@ class LoginForm extends Component {
     e.preventDefault();
     this.validator.showMessages();
     this.setState({
-      ...this.state
+      ...this.state,
     });
 
     if (!this.validator.allValid()) {
@@ -37,24 +37,24 @@ class LoginForm extends Component {
 
     const credentials = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
 
     await this.props.loginUser(credentials);
 
     if (this.props.auth.currentUser.id) {
       // reload the page
-      this.setState(prevState => ({
-        loggedInStatus: true
-      }));
+      this.setState({
+        isLoggedIn: true,
+      });
     }
   };
 
   render() {
-    const { loggedInStatus } = this.state;
+    const { isLoggedIn } = this.state;
     const { loginStatus } = this.props;
 
-    if (loggedInStatus) {
+    if (isLoggedIn) {
       return <Redirect to="/" />;
     }
 
@@ -100,12 +100,12 @@ LoginForm.propTypes = {
   loginUser: PropTypes.func,
   errorMessage: PropTypes.string,
   history: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errorMessage: state.auth.errorMessage
+  errorMessage: state.auth.errorMessage,
 });
 
 export default connect(mapStateToProps, { loginUser })(LoginForm);
