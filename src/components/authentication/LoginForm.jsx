@@ -2,22 +2,25 @@ import React, { Component } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
+import { isUserLoggedIn } from '../../utils/helpers';
 import { loginUser } from '../../store/modules/auth';
 
 class LoginForm extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    isLoggedIn: isUserLoggedIn(),
   };
 
   validator = new SimpleReactValidator({
-    element: message => <div>{message}</div>
+    element: message => <div>{message}</div>,
   });
 
   onChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -25,7 +28,7 @@ class LoginForm extends Component {
     e.preventDefault();
     this.validator.showMessages();
     this.setState({
-      ...this.state
+      ...this.state,
     });
 
     if (!this.validator.allValid()) {
@@ -34,22 +37,26 @@ class LoginForm extends Component {
 
     const credentials = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
 
     await this.props.loginUser(credentials);
 
     if (this.props.auth.currentUser.id) {
-      this.redirect();
+      // reload the page
+      this.setState({
+        isLoggedIn: true,
+      });
     }
   };
 
-  redirect = () => {
-    this.props.history.push('/');
-  };
-
   render() {
+    const { isLoggedIn } = this.state;
     const { loginStatus } = this.props;
+
+    if (isLoggedIn) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <form
@@ -93,15 +100,12 @@ LoginForm.propTypes = {
   loginUser: PropTypes.func,
   errorMessage: PropTypes.string,
   history: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errorMessage: state.auth.errorMessage
+  errorMessage: state.auth.errorMessage,
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(LoginForm);
+export default connect(mapStateToProps, { loginUser })(LoginForm);
